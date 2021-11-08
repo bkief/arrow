@@ -74,7 +74,7 @@ The reference Arrow libraries contain many distinct software components:
 - Conversions to and from other in-memory data structures
 - Readers and writers for various widely-used file formats (such as Parquet, CSV)
 
-## Implementation status
+## Implementation status 
 
 The official Arrow libraries in this repository are in different stages of
 implementing the Arrow format and related features.  See our current
