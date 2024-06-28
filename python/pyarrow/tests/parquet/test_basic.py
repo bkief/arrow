@@ -377,6 +377,7 @@ def test_store_decimal_as_integer():
                      compression="gzip",
                      use_dictionary=False,
                      store_decimal_as_integer=True)
+    
     # Check physical type in parquet schema
     with tempfile.TemporaryDirectory() as tempdir:
         pqtestfile_path = os.path.join(tempdir, 'test.parquet')
