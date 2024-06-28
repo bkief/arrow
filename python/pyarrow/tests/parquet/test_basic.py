@@ -377,7 +377,7 @@ def test_store_decimal_as_integer():
                      compression="gzip",
                      use_dictionary=False,
                      store_decimal_as_integer=True)
-    
+
     # Check physical type in parquet schema
     with tempfile.TemporaryDirectory() as tempdir:
         pqtestfile_path = os.path.join(tempdir, 'test.parquet')
@@ -385,7 +385,7 @@ def test_store_decimal_as_integer():
                        compression="gzip",
                        use_dictionary=False,
                        store_decimal_as_integer=True)
-        
+
         pqtestfile = pq.ParquetFile(pqtestfile_path)
         pqcol_decimal_1_9 = pqtestfile.schema.column(0)
         pqcol_decimal_10_18 = pqtestfile.schema.column(1)
