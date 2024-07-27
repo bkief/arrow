@@ -1358,13 +1358,11 @@ cdef encoding_enum_from_name(str encoding_name):
         'DELTA_BINARY_PACKED': ParquetEncoding_DELTA_BINARY_PACKED,
         'DELTA_LENGTH_BYTE_ARRAY': ParquetEncoding_DELTA_LENGTH_BYTE_ARRAY,
         'DELTA_BYTE_ARRAY': ParquetEncoding_DELTA_BYTE_ARRAY,
-        'RLE_DICTIONARY': 'dict',
-        'PLAIN_DICTIONARY': 'dict',
+        'RLE_DICTIONARY': ParquetEncoding_RLE_DICTIONARY,
+        'PLAIN_DICTIONARY': ParquetEncoding_PLAIN_DICTIONARY,
     }.get(encoding_name, None)
     if enc is None:
         raise ValueError(f"Unsupported column encoding: {encoding_name!r}")
-    elif enc == 'dict':
-        raise ValueError(f"{encoding_name!r} is already used by default.")
     else:
         return enc
 
@@ -1969,6 +1967,8 @@ cdef shared_ptr[WriterProperties] _create_writer_properties(
                 props.encoding(tobytes(column),
                                encoding_enum_from_name(_encoding))
         elif isinstance(column_encoding, str):
+            if column_encoding in ('RLE_DICTIONARY', 'PLAIN_DICTIONARY'):
+                raise ValueError(f"{column_encoding!r} is already used by default.")
             props.encoding(encoding_enum_from_name(column_encoding))
         else:
             raise TypeError(
